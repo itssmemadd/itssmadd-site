@@ -1,0 +1,123 @@
+/* Shared gallery page styles — itssmadd.com */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --text:  #111111;
+  --muted: #888880;
+  --bdr:   #e8e8e4;
+  --ease:  cubic-bezier(.22,.61,.36,1);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--white);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+body.locked { overflow: hidden; }
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── Top bar ── */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px clamp(18px, 4vw, 48px);
+  border-bottom: 1px solid var(--bdr);
+  position: sticky; top: 0; background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px); z-index: 50;
+}
+.brand { font-family: 'Cormorant', serif; font-size: 22px; letter-spacing: .14em; font-weight: 500; }
+.nav { display: flex; gap: clamp(14px, 3vw, 34px); }
+.nav a { font-size: 12px; letter-spacing: .18em; color: var(--muted); transition: color .3s; }
+.nav a:hover, .nav a.active { color: var(--text); }
+
+/* ── Hero ── */
+.hero { text-align: center; padding: clamp(40px, 7vw, 84px) 20px clamp(28px, 4vw, 48px); }
+.hero h1 {
+  font-family: 'Cormorant', serif; font-weight: 500;
+  font-size: clamp(42px, 7vw, 76px); letter-spacing: .04em; line-height: 1.05;
+}
+.hero p { color: var(--muted); font-size: 14px; letter-spacing: .06em; margin-top: 14px; max-width: 620px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.hero .count { display: inline-block; margin-top: 16px; font-size: 11px; letter-spacing: .22em; color: var(--muted); border: 1px solid var(--bdr); padding: 8px 18px; border-radius: 999px; }
+
+/* ── Grid (same look as portfolio) ── */
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: dense;
+  gap: 2px;
+  background: var(--bdr);
+  border-top: 1px solid var(--bdr);
+  border-bottom: 1px solid var(--bdr);
+}
+.g-cell {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  background: #eee;
+  position: relative;
+}
+.g-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .6s var(--ease), filter .4s;
+  filter: saturate(.88);
+}
+.g-cell:hover img { transform: scale(1.05); filter: saturate(1); }
+.g-cell--wide { grid-column: span 2; aspect-ratio: 3/2; }
+
+/* ── Lightbox ── */
+.lb {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(255,255,255,.97);
+  display: none; align-items: center; justify-content: center;
+}
+.lb.open { display: flex; }
+.lb-stage { max-width: 92vw; max-height: 88vh; }
+.lb-stage img { max-width: 92vw; max-height: 88vh; object-fit: contain; }
+.lb-close {
+  position: absolute; top: 18px; right: 22px;
+  background: none; border: none; font-size: 26px; cursor: pointer; color: var(--text);
+}
+.lb-arr {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  background: none; border: none; font-size: 34px; cursor: pointer; color: var(--text);
+  padding: 12px; opacity: .7;
+}
+.lb-arr:hover { opacity: 1; }
+.lb-arr:disabled { opacity: .2; cursor: default; }
+.lb-prev { left: 8px; } .lb-next { right: 8px; }
+.lb-bar {
+  position: absolute; bottom: 20px; left: 0; right: 0; text-align: center;
+  font-size: 12px; letter-spacing: .2em; color: var(--muted);
+}
+
+/* ── CTA ── */
+.cta { text-align: center; padding: clamp(48px, 8vw, 96px) 20px; }
+.cta h2 { font-family: 'Cormorant', serif; font-weight: 500; font-size: clamp(30px, 5vw, 48px); margin-bottom: 14px; }
+.cta p { color: var(--muted); font-size: 14px; margin-bottom: 26px; }
+.btn {
+  display: inline-block; background: var(--text); color: #fff;
+  font-size: 12px; letter-spacing: .2em; padding: 16px 44px; border-radius: 999px;
+  transition: transform .3s var(--ease), opacity .3s;
+}
+.btn:hover { transform: translateY(-2px); opacity: .88; }
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--bdr);
+  padding: 28px clamp(18px, 4vw, 48px);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  font-size: 12px; color: var(--muted); letter-spacing: .08em;
+}
+footer .social { display: flex; gap: 18px; }
+footer a:hover { color: var(--text); }
+
+@media (max-width: 1024px) { .gal-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px) {
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+  .nav a { font-size: 10px; }
+}

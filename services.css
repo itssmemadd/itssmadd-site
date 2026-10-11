@@ -1,0 +1,36 @@
+/* Service landing pages — itssmadd.com (marrakech-photographer, agadir-photographer) */
+.svc-wrap { max-width: 860px; margin: 0 auto; padding: 0 22px; }
+.svc-hero { padding: 110px 0 30px; text-align: left; }
+.svc-kicker { font-size: 12px; letter-spacing: 3px; color: #888; text-transform: uppercase; margin-bottom: 14px; }
+.svc-hero h1 { font-family: 'Cormorant', serif; font-weight: 500; font-size: clamp(34px, 6vw, 56px); line-height: 1.12; margin-bottom: 18px; }
+.svc-lead { font-size: 17px; color: #444; max-width: 640px; }
+.svc-lead a, .svc-body a { color: #111; text-underline-offset: 3px; }
+.svc-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 34px 0 10px; }
+.svc-strip img { width: 100%; height: 220px; object-fit: cover; display: block; }
+.svc-body { padding: 26px 0 10px; }
+.svc-body h2 { font-family: 'Cormorant', serif; font-weight: 500; font-size: clamp(24px, 4vw, 32px); margin: 34px 0 12px; }
+.svc-body p { color: #333; margin-bottom: 14px; font-size: 16px; }
+.svc-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 20px 0 6px; }
+.svc-card { border: 1px solid #e8e8e8; padding: 20px; }
+.svc-card h3 { font-size: 15px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: 600; }
+.svc-card p { font-size: 14px; color: #555; margin: 0; }
+.svc-faq { margin: 10px 0 30px; }
+.svc-faq details { border-top: 1px solid #e8e8e8; padding: 16px 0; }
+.svc-faq details:last-child { border-bottom: 1px solid #e8e8e8; }
+.svc-faq summary { cursor: pointer; font-weight: 600; font-size: 16px; list-style: none; }
+.svc-faq summary::-webkit-details-marker { display: none; }
+.svc-faq details p { color: #444; font-size: 15px; margin: 10px 0 0; }
+.svc-cta { text-align: center; border: 1px solid #e8e8e8; padding: 44px 24px; margin: 10px 0 70px; }
+.svc-cta p { font-family: 'Cormorant', serif; font-size: 26px; margin-bottom: 18px; }
+.svc-cta a { display: inline-block; background: #111; color: #fff; text-decoration: none; padding: 14px 34px; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+.svc-foot { text-align: center; color: #999; font-size: 13px; padding: 0 0 46px; }
+@media (max-width: 640px) {
+  .svc-strip { grid-template-columns: 1fr 1fr; }
+  .svc-strip img { height: 160px; }
+  .svc-cards { grid-template-columns: 1fr; }
+  .svc-hero { padding-top: 96px; }
+}
+.svc-rating { font-size: 15px; color: #111; margin-top: 14px; }
+.svc-rating a { color: #111; text-decoration: none; font-weight: 600; }
+.svc-rating a:hover { text-decoration: underline; }
+.svc-phone a { font-weight: 400; }

@@ -1,0 +1,22 @@
+/* Floating WhatsApp button — itssmadd.com */
+.wa-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 90;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, .45);
+  transition: transform .3s cubic-bezier(.22,.61,.36,1);
+}
+.wa-float:hover { transform: scale(1.08); }
+.wa-float svg { width: 30px; height: 30px; fill: #ffffff; }
+@media (max-width: 640px) {
+  .wa-float { right: 16px; bottom: 16px; width: 52px; height: 52px; }
+  .wa-float svg { width: 27px; height: 27px; }
+}

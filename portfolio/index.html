@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- évite que le navigateur garde d'anciennes versions en cache pendant le dev -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Mohamed Lemsayl — Portrait Photographer, Agadir & Marrakech</title>
+  <meta name="description" content="Mohamed Lemsayl, portrait photographer based in Agadir, available in Marrakech. Portrait, editorial and bespoke projects across Morocco." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="canonical" href="https://itssmadd.com/portfolio/" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="../favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+
+  <!-- Open Graph / partage réseaux -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mohamed Lemsayl — Portrait Photographer, Agadir" />
+  <meta property="og:description" content="Portrait photographer based in Agadir. Portrait, editorial and bespoke projects." />
+  <meta property="og:image" content="https://itssmadd.com/portfolio/images/profile.jpg" />
+  <meta property="og:url" content="https://itssmadd.com/portfolio/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Données structurées (SEO local) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Mohamed Lemsayl — Portrait Photographer",
+    "image": "https://itssmadd.com/portfolio/images/profile.jpg",
+    "url": "https://itssmadd.com",
+    "description": "Portrait photographer based in Agadir. Portrait, editorial and bespoke projects.",
+    "areaServed": "Agadir",
+    "address": { "@type": "PostalAddress", "addressLocality": "Agadir", "addressCountry": "MA" },
+    "sameAs": ["https://instagram.com/itss.madd"]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=11" />
+  <link rel="stylesheet" href="/whatsapp.css" />
+</head>
+<body>
+
+  <h1 class="sr-only">Mohamed Lemsayl — Portrait photographer in Agadir and Marrakech, Morocco</h1>
+
+  <!-- ══════════════════════════════════════
+       CHROME — toujours visible
+  ══════════════════════════════════════ -->
+
+  <!-- Gauche : toggle profil -->
+  <div class="c-left" id="cLeft">
+    <button id="profileToggle">SEE PROFILE</button>
+  </div>
+
+  <!-- Centre : nom de l'artiste -->
+  <button class="site-name" id="siteName" onclick="scrollToTop()">Mohamed Lemsayl</button>
+
+  <!-- Droite : instagram + contact -->
+  <div class="c-right" id="cRight">
+    <a class="c-insta" href="https://instagram.com/itss.madd" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4.5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a class="c-label c-contact" href="mailto:itssmadd4@gmail.com">CONTACT</a>
+    <a class="c-label" href="https://itssmadd.com/journal/">JOURNAL</a>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       PAGE PRINCIPALE (scroll naturel)
+  ══════════════════════════════════════ -->
+  <main id="mainPage">
+
+    <!-- ── Section 1 : Hub ── -->
+    <section id="hub">
+      <div class="hub-tiles">
+
+        <button class="tile" data-open="portraits">
+          <div class="tile-img">
+            <img src="" alt="Portrait gallery — Mohamed Lemsayl, photographer in Agadir" loading="lazy" decoding="async" />
+          </div>
+          <span class="tile-lbl">PORTRAIT</span>
+        </button>
+
+        <button class="tile" data-open="editorials">
+          <div class="tile-img">
+            <img src="" alt="Fashion editorial gallery — Mohamed Lemsayl, photographer in Agadir" loading="lazy" decoding="async" />
+          </div>
+          <span class="tile-lbl">EDITORIAL</span>
+        </button>
+
+        <button class="tile" data-open="events">
+          <div class="tile-img">
+            <img src="" alt="Events gallery — Mohamed Lemsayl, photographer in Agadir" loading="lazy" decoding="async" />
+          </div>
+          <span class="tile-lbl">EVENTS</span>
+        </button>
+
+        <button class="tile" data-open="swimwear">
+          <div class="tile-img">
+            <img src="" alt="Swimwear gallery — Mohamed Lemsayl, photographer in Agadir" loading="lazy" decoding="async" />
+          </div>
+          <span class="tile-lbl">SWIMWEAR</span>
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- ── Section 2 : Profil ── -->
+    <section id="profile">
+
+      <!-- Gauche : photo fixe -->
+      <div class="p-photo">
+        <img
+          src="images/profile.jpg"
+          alt="Mohamed Lemsayl"
+          decoding="async"
+        />
+      </div>
+
+      <!-- Droite : contenu défilant -->
+      <div class="p-content">
+
+        <div class="p-block">
+          <span class="p-label">BIO</span>
+          <p>
+            Mohamed Lemsayl, professionally known as <strong>itssmadd</strong>,
+            is a portrait and fashion photographer based in <strong>Agadir,
+            Morocco</strong> — available for assignments in <strong>Marrakech</strong>
+            and across the country.
+          </p>
+          <p>
+            His work blends refined composition, natural light, and honest
+            storytelling — creating modern portraits, fashion editorials, and
+            event coverage for models, brands, and private clients.
+          </p>
+        </div>
+
+        <div class="p-block">
+          <span class="p-label">NEWS</span>
+          <div class="news-grid" id="newsGrid"></div>
+        </div>
+
+      </div><!-- /p-content -->
+    </section><!-- /profile -->
+
+  </main>
+
+
+  <!-- ══════════════════════════════════════
+       OVERLAY GALERIE
+  ══════════════════════════════════════ -->
+  <div id="ov-gallery" class="overlay">
+
+    <div class="gbar">
+      <button class="gbar-back" id="galleryBack">BACK</button>
+      <h2 class="gbar-title" id="galleryTitle"></h2>
+      <div class="gbar-modes">
+        <button class="modeBtn active" data-mode="grid">GALLERY</button>
+        <button class="modeBtn" data-mode="carousel">CAROUSEL</button>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="mode-pane" id="pane-grid">
+      <div class="gal-grid" id="galGrid"></div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="mode-pane dn" id="pane-car">
+      <button class="carr carr--p" id="carPrev" aria-label="Image précédente">←</button>
+      <div class="car-stage">
+        <div class="car-imgs" id="carImgs"></div>
+      </div>
+      <button class="carr carr--n" id="carNext" aria-label="Image suivante">→</button>
+      <span class="car-ctr" id="carCtr"></span>
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       OVERLAY COMMISSIONS
+  ══════════════════════════════════════ -->
+  <div id="ov-commissions" class="overlay">
+
+    <div class="gbar">
+      <button class="gbar-back" id="commBack">BACK</button>
+      <span class="gbar-title"><em>Booking</em></span>
+      <div></div>
+    </div>
+
+    <div class="comm-body">
+
+      <form id="commForm" class="comm-form" name="booking" method="POST">
+        <input type="hidden" id="hf-name" name="name" value="" />
+        <input type="hidden" id="hf-title" name="title" value="Booking via itssmadd.com" />
+        <input type="hidden" id="hf-time" name="time" value="" />
+
+        <div class="fields-row">
+          <div class="field"><input type="text" id="fn1" name="first_name" required placeholder=" " /><label for="fn1">First name *</label></div>
+          <div class="field"><input type="text" id="fn2" name="last_name" required placeholder=" " /><label for="fn2">Last name *</label></div>
+        </div>
+
+        <div class="field"><input type="email" id="fe" name="email" required placeholder=" " /><label for="fe">Email *</label></div>
+
+        <div class="field field--select">
+          <label class="select-static-label">WhatsApp *</label>
+          <div class="fields-row">
+            <select id="wa-c" name="whatsapp_country" aria-label="Indicatif pays">
+              <option value="+212" selected>Maroc (+212)</option>
+              <option value="+33">France (+33)</option>
+              <option value="+34">Espagne (+34)</option>
+              <option value="+32">Belgique (+32)</option>
+              <option value="+31">Pays-Bas (+31)</option>
+              <option value="+39">Italie (+39)</option>
+              <option value="+49">Allemagne (+49)</option>
+              <option value="+351">Portugal (+351)</option>
+              <option value="+44">Royaume-Uni (+44)</option>
+              <option value="+1">USA / Canada (+1)</option>
+              <option value="+971">Émirats (+971)</option>
+              <option value="+966">Arabie Saoudite (+966)</option>
+              <option value="+221">Sénégal (+221)</option>
+              <option value="+225">Côte d'Ivoire (+225)</option>
+            </select>
+            <div class="field" style="margin-bottom:0"><input type="tel" id="wa-n" name="whatsapp_number" required placeholder=" " /><label for="wa-n">Numéro</label></div>
+          </div>
+        </div>
+
+        <div class="field field--select">
+          <label class="select-static-label" for="ft">Project type</label>
+          <select id="ft" name="project_type">
+            <option value="" disabled selected></option>
+            <option>Studio Portrait</option>
+            <option>Outdoor Portrait</option>
+            <option>Editorial &amp; Commercial</option>
+            <option>Event / Festival</option>
+            <option>Custom project</option>
+          </select>
+        </div>
+
+        <div class="field field--select">
+          <label class="select-static-label" for="fd">Shooting date</label>
+          <input type="date" id="fd" name="shooting_date" />
+        </div>
+
+        <div class="field"><input type="text" id="fc" name="city_venue" placeholder=" " /><label for="fc">City — Venue</label></div>
+
+        <div class="field"><textarea id="fm" name="message" rows="5" required placeholder=" "></textarea><label for="fm">Message *</label></div>
+
+        <div class="comm-form-footer">
+          <button type="submit" class="comm-submit">Send</button>
+          <p class="form-ok" id="commOk">Reçu — réponse sous 24h.</p>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       LIGHTBOX (depuis grid)
+  ══════════════════════════════════════ -->
+  <div id="lb" class="lb" role="dialog" aria-modal="true" aria-label="Photo en plein écran">
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <button class="lb-arr lb-prev" id="lbPrev" aria-label="Image précédente">←</button>
+    <div id="lbStage" class="lb-stage"></div>
+    <button class="lb-arr lb-next" id="lbNext" aria-label="Image suivante">→</button>
+    <div class="lb-bar"><span id="lbCtr"></span></div>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="photos.js?v=12"></script>
+  <script src="script.js?v=13"></script>
+  <a class="wa-float" href="https://wa.me/212609977352?text=Hi%20Mohamed!%20I%27d%20like%20to%20book%20a%20photoshoot." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+</body>
+</html>

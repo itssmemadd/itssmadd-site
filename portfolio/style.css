@@ -1,0 +1,746 @@
+/* ================================================================
+   YASSINE LAGHRABLI — Monday.art exact
+   ================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Texte réservé aux lecteurs d'écran / SEO (invisible visuellement) */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+:root {
+  --ch:    50px;            /* chrome height */
+  --gbar:  56px;            /* hauteur barre de galerie */
+  --white: #ffffff;
+  --text:  #111111;
+  --muted: #888880;
+  --acc:   #9B7E5E;         /* accent: labels news / tiles */
+  --bdr:   rgba(0,0,0,0.09);
+  --ease:  cubic-bezier(0.16,1,0.3,1);
+  --serif: 'Cormorant', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+}
+
+html { font-size: 16px; }
+
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  overflow-x: hidden;
+  /* scroll is natural — overlays set overflow:hidden when open */
+}
+
+body.locked { overflow: hidden; }
+
+a   { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Calque de transition fondu enchaîné (book / carousel / lightbox)
+   Le fond opaque couvre les zones de letterbox : quand l'image entrante
+   apparaît par-dessus, elle masque entièrement l'ancienne — même si les
+   formats diffèrent (4x5 vs 3x2), aucune superposition visible. */
+.xf-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--white);
+  transition: opacity 0.6s ease;
+}
+
+
+/* ════════════════════════════════════════════
+   CHROME (fixed, toujours visible)
+════════════════════════════════════════════ */
+
+/* Gauche : toggle bouton */
+.c-left {
+  position: fixed;
+  top: 16px;
+  left: 20px;
+  z-index: 800;
+}
+
+#profileToggle {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid var(--text);
+  color: var(--text);
+  padding: 5px 9px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+
+#profileToggle:hover { opacity: 0.45; }
+
+/* Centre : nom artiste */
+.site-name {
+  position: fixed;
+  top: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 800;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+  color: var(--text);
+  white-space: nowrap;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Droite : label + orbe */
+.c-right {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.c-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.c-contact {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.c-contact:hover { opacity: 0.45; }
+
+.c-insta {
+  display: flex;
+  align-items: center;
+  color: var(--text);
+  transition: opacity 0.2s;
+}
+
+.c-insta:hover { opacity: 0.45; }
+
+
+/* ════════════════════════════════════════════
+   HUB — section 1
+════════════════════════════════════════════ */
+#hub {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* le nom fixe est en haut, on centre le reste */
+  padding-top: var(--ch);
+}
+
+.hub-tiles {
+  display: flex;
+  gap: 2px;
+  align-items: flex-start;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.tile-img {
+  width: clamp(200px, 22vw, 320px);
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #eee;
+}
+
+.tile-img img {
+  transition: transform 0.7s var(--ease), filter 0.4s;
+  filter: saturate(0.88);
+}
+
+.tile:hover .tile-img img {
+  transform: scale(1.05);
+  filter: saturate(1);
+}
+
+.tile-lbl {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+
+
+/* ════════════════════════════════════════════
+   PROFIL — section 2
+   Gauche : photo sticky | Droite : contenu scroll
+════════════════════════════════════════════ */
+#profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+  /* bloc centré avec marges latérales — comme Monday.art */
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: calc(var(--ch) + 1.5rem) clamp(1.5rem, 4vw, 3.5rem) 2rem;
+}
+
+/* Photo gauche — carrée, alignée en haut */
+.p-photo {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.p-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* Contenu droite — défilant, hauteur = image gauche (sync via JS) */
+.p-content {
+  padding: 0 1px 0 0;      /* petit padding droit pour la scrollbar */
+  overflow-y: auto;
+  /* la hauteur est fixée par JS = hauteur de .p-photo */
+  scrollbar-width: thin;
+}
+
+.p-content::-webkit-scrollbar { width: 4px; }
+.p-content::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 4px; }
+
+.p-block {
+  margin-bottom: 2rem;
+}
+
+.p-block:last-child { margin-bottom: 0.5rem; }
+
+.p-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.8rem;
+}
+
+.p-block p {
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #555;
+  margin-bottom: 0.8rem;
+  text-align: justify;
+}
+
+/* NEWS grid : les 6 photos les plus récentes (2 colonnes × 3 rangées) */
+.news-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.news-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.news-img {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: #eee;
+}
+
+.news-img img {
+  transition: transform 0.6s var(--ease);
+  filter: saturate(0.9);
+}
+
+.news-item:hover .news-img img {
+  transform: scale(1.04);
+  filter: saturate(1);
+}
+
+.news-cap {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc);
+  line-height: 1.4;
+}
+
+
+/* ════════════════════════════════════════════
+   OVERLAYS (galerie + commissions)
+════════════════════════════════════════════ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--white);
+  z-index: 1000;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+
+/* ── Gallery bar ── */
+.gbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+}
+
+.overlay .gbar { margin-top: 0; }
+
+.gbar-back {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  min-width: 70px;
+  transition: color 0.2s;
+}
+
+.gbar-back:hover { color: var(--text); }
+
+.gbar-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.15rem;
+  color: var(--text);
+  flex: 1;
+  text-align: center;
+  align-self: flex-end;
+  padding-bottom: 10px;
+}
+
+.gbar-modes {
+  display: flex;
+  gap: 1.4rem;
+  min-width: 70px;
+  justify-content: flex-end;
+}
+
+.modeBtn {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  padding: 3px 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.modeBtn:hover { color: var(--text); }
+.modeBtn.active { color: var(--text); border-bottom-color: var(--text); }
+
+
+/* ── Mode panels ── */
+.mode-pane {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+}
+
+.dn { display: none !important; }
+
+
+/* Grid mode */
+#pane-grid {
+  align-items: flex-start;
+  overflow-y: auto;
+  display: block;
+  padding: 2px 0 0;
+}
+
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: dense;     /* comble les trous laissés par les cellules larges */
+  gap: 2px;
+  background: var(--bdr);
+}
+
+.g-cell {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  background: #eee;
+  position: relative;
+}
+
+.g-cell img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease), filter 0.4s;
+  filter: saturate(0.88);
+}
+
+.g-cell:hover img { transform: scale(1.05); filter: saturate(1); }
+
+/* Photo paysage : occupe 2 colonnes et s'affiche EN ENTIER (pas de recadrage) */
+.g-cell--wide {
+  grid-column: span 2;
+  aspect-ratio: 3 / 2;
+}
+.g-cell--wide img {
+  object-fit: contain;
+  background: #ececea;
+}
+
+
+/* Carousel mode */
+#pane-car { flex-direction: column; position: relative; }
+
+.car-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  padding: 1rem;
+}
+
+.car-imgs {
+  position: relative;
+  width: 80%;
+  height: calc(100vh - var(--gbar) - 80px);
+  height: calc(100dvh - var(--gbar) - 80px);
+  flex-shrink: 0;
+}
+
+.carr {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  transition: color 0.2s;
+}
+
+.carr:hover { color: var(--text); }
+.carr--p { left: 0; }
+.carr--n { right: 0; }
+.carr:disabled { opacity: 0.2; cursor: default; }
+
+.car-ctr {
+  position: absolute;
+  bottom: 1.2rem;
+  right: clamp(1rem, 3vw, 2rem);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+
+/* ── Commissions overlay ── */
+.comm-body {
+  flex: 1;
+  display: flex;
+  padding: clamp(2rem, 4vw, 4rem);
+  overflow-y: auto;
+}
+
+/* Form — margin auto = centré quand il y a de la place,
+   et reste entièrement scrollable quand il dépasse l'écran */
+.comm-form {
+  width: 100%;
+  max-width: 520px;
+  margin: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fields-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 2rem;
+}
+
+.field { position: relative; margin-bottom: 2rem; }
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--bdr);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  padding: 1.2rem 0 0.6rem;
+  outline: none;
+  resize: none;
+  transition: border-color 0.25s;
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-bottom-color: var(--text); }
+
+.field label {
+  position: absolute;
+  top: 0.9rem;
+  left: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  pointer-events: none;
+  transition: all 0.22s var(--ease);
+}
+
+.field input:focus ~ label,
+.field input:not(:placeholder-shown) ~ label,
+.field textarea:focus ~ label,
+.field textarea:not(:placeholder-shown) ~ label {
+  top: 0;
+  font-size: 0.56rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.field--select { padding-top: 0.5rem; }
+
+/* Honeypot anti-spam (Netlify Forms) — invisible */
+.hp { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+.select-static-label {
+  display: block;
+  font-size: 0.56rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  pointer-events: none;
+}
+
+.comm-form-footer {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+
+.comm-submit {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: var(--text);
+  border: 1px solid var(--text);
+  color: var(--white);
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.comm-submit:hover { opacity: 0.6; }
+
+.form-ok { display: none; font-size: 0.76rem; color: var(--muted); letter-spacing: 0.06em; }
+.form-ok.show { display: block; }
+
+
+/* ════════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════════ */
+.lb {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,10,0.97);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+
+.lb.open { opacity: 1; pointer-events: all; }
+
+.lb-stage {
+  position: relative;
+  width: 90vw;
+  height: 88vh;
+  transform: scale(0.97);
+  transition: transform 0.4s var(--ease);
+}
+
+.lb.open .lb-stage { transform: scale(1); }
+
+.lb-stage .xf-img { object-fit: contain; background: #0a0a0a; }
+
+.lb-close {
+  position: fixed;
+  top: 1.2rem; right: 1.4rem;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.lb-close:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+.lb-arr {
+  position: fixed;
+  top: 50%; transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.45);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem 1.4rem;
+  transition: color 0.2s;
+}
+
+.lb-arr:hover { color: #fff; }
+.lb-prev { left: 0; }
+.lb-next { right: 0; }
+
+.lb-bar {
+  position: fixed;
+  bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+#lbCtr { font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); }
+
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Profile mobile : colonne unique */
+  #profile {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .p-photo { aspect-ratio: 4/5; }
+
+  /* Commissions */
+  .fields-row { grid-template-columns: 1fr; gap: 0; }
+
+  /* Gallery grid */
+  .gal-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .hub-tiles { flex-direction: column; align-items: center; gap: 8px; }
+  .tile-img { width: min(80vw, 300px); }
+
+  /* Header compact : nom qui s'adapte + côtés resserrés pour éviter le chevauchement */
+  .c-left  { left: 12px; }
+  .c-right { right: 12px; gap: 6px; }
+  .site-name { top: 15px; font-size: clamp(1rem, 4.6vw, 1.3rem); }
+  #profileToggle { font-size: 9px; letter-spacing: 0.1em; padding: 4px 6px; }
+  .c-label { font-size: 9px; letter-spacing: 0.1em; }
+  .c-insta svg { width: 16px; height: 16px; }
+
+  /* le bouton CONTACT reste visible (seule entrée vers le formulaire sur mobile) */
+
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Bandeau galerie sur 2 rangées : BACK + modes en haut, titre en dessous */
+  :root { --gbar: 78px; }
+  .gbar {
+    height: var(--gbar);
+    flex-wrap: wrap;
+    align-content: center;
+    row-gap: 7px;
+  }
+  .gbar-back  { order: 1; }
+  .gbar-modes { order: 2; gap: 0.7rem; }
+  .gbar-title {
+    order: 3;
+    flex: 0 0 100%;
+    align-self: auto;
+    text-align: center;
+    padding: 0;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+}
