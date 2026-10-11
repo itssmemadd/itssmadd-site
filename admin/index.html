@@ -308,12 +308,18 @@ async function deletePhoto(g, file) {
       const b = await gh('POST', '/repos/' + OWNER + '/' + REPO + '/git/blobs', { content: b64, encoding: 'base64' });
       return b.sha;
     }
-    const tree = [
-      { path: 'portfolio/images/web/' + g + '/' + file, mode: '100644', type: 'blob', sha: null },
-      { path: 'portfolio/images/thumbs/' + g + '/' + file, mode: '100644', type: 'blob', sha: null },
-      { path: 'portfolio/photos.json', mode: '100644', type: 'blob', sha: await blob(b64encode(jsonStr)) },
-      { path: 'portfolio/photos.js', mode: '100644', type: 'blob', sha: await blob(b64encode(jsStr)) }
-    ];
+    // check which files actually exist (some old entries may point to missing files)
+    async function exists(path) {
+      try { await gh('GET', '/repos/' + OWNER + '/' + REPO + '/contents/' + path + '?ref=' + BRANCH); return true; }
+      catch (e) { return false; }
+    }
+    const webPath = 'portfolio/images/web/' + g + '/' + file;
+    const thumbPath = 'portfolio/images/thumbs/' + g + '/' + file;
+    const tree = [];
+    if (await exists(webPath)) tree.push({ path: webPath, mode: '100644', type: 'blob', sha: null });
+    if (await exists(thumbPath)) tree.push({ path: thumbPath, mode: '100644', type: 'blob', sha: null });
+    tree.push({ path: 'portfolio/photos.json', mode: '100644', type: 'blob', sha: await blob(b64encode(jsonStr)) });
+    tree.push({ path: 'portfolio/photos.js', mode: '100644', type: 'blob', sha: await blob(b64encode(jsStr)) });
     const newTree = await gh('POST', '/repos/' + OWNER + '/' + REPO + '/git/trees', { base_tree: commit.tree.sha, tree });
     const newCommit = await gh('POST', '/repos/' + OWNER + '/' + REPO + '/git/commits', {
       message: 'Admin: -1 photo → ' + g + ' (' + file + ')',
