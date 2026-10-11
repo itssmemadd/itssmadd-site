@@ -309,8 +309,8 @@ async function deletePhoto(g, file) {
       return b.sha;
     }
     const tree = [
-      { path: 'portfolio/images/web/' + g + '/' + file, sha: null },
-      { path: 'portfolio/images/thumbs/' + g + '/' + file, sha: null },
+      { path: 'portfolio/images/web/' + g + '/' + file, mode: '100644', type: 'blob', sha: null },
+      { path: 'portfolio/images/thumbs/' + g + '/' + file, mode: '100644', type: 'blob', sha: null },
       { path: 'portfolio/photos.json', mode: '100644', type: 'blob', sha: await blob(b64encode(jsonStr)) },
       { path: 'portfolio/photos.js', mode: '100644', type: 'blob', sha: await blob(b64encode(jsStr)) }
     ];
