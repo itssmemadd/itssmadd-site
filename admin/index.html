@@ -178,11 +178,11 @@ function resize(file, maxW) {
       const w = Math.round(img.width * r), h = Math.round(img.height * r);
       const c = document.createElement('canvas'); c.width = w; c.height = h;
       c.getContext('2d').drawImage(img, 0, 0, w, h);
-      c.toBlob(b => {
+      c.toBlob(b => { if (b && b.type === 'image/webp') { const fr = new FileReader(); fr.onload = () => res({ b64: fr.result.split(',')[1], w, h, ext: 'webp' }); fr.onerror = rej; fr.readAsDataURL(b); } else { c.toBlob(b2 => { const fr2 = new FileReader(); fr2.onload = () => res({ b64: fr2.result.split(',')[1], w, h, ext: 'jpg' }); fr2.onerror = rej; fr2.readAsDataURL(b2); }, 'image/jpeg', 0.85); } }, 'image/webp', 0.85); /*
         const fr = new FileReader();
         fr.onload = () => res({ b64: fr.result.split(',')[1], w, h });
         fr.onerror = rej; fr.readAsDataURL(b);
-      }, 'image/jpeg', 0.85);
+      }, 'image/jpeg', 0.85); */
       URL.revokeObjectURL(img.src);
     };
     img.onerror = rej;
@@ -205,7 +205,7 @@ $('btnPublish').onclick = async () => {
       const web = await resize(files[i], 1600);
       const th = await resize(files[i], 480);
       const loc = ($('locSel') && $('locSel').value) || 'taghazout';
-      const name = 'photographer-' + loc + '-' + gallery + '-' + ts + '-' + Date.now().toString(36).slice(-6) + '-' + (i+1) + '.jpg';
+      const name = 'photographer-' + loc + '-' + gallery + '-' + ts + '-' + Date.now().toString(36).slice(-6) + '-' + (i+1) + '.' + (web.ext || 'jpg');
       uploads.push({ name, web, th });
     }
     // current photos.json
